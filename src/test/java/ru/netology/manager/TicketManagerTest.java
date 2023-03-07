@@ -3,7 +3,10 @@ package ru.netology.manager;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import ru.netology.Ticket;
+import ru.netology.TicketByDurationDescComparator;
 import ru.netology.repository.TicketRepository;
+
+import java.util.Comparator;
 
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 
@@ -38,6 +41,14 @@ class TicketManagerTest {
     }
 
     @Test
+    public void shouldShowAllComparator() {
+        Comparator<Ticket> comparator = new TicketByDurationDescComparator();
+
+        Ticket[] expected = new Ticket[]{ticketFour, ticketOne, ticketNine, ticketSeven, ticketThree};
+        assertArrayEquals(expected, manager.findAll("VOZ", "GUW", comparator));
+    }
+
+    @Test
     public void shouldShowAll() {
         Ticket[] expected = new Ticket[]{ticketNine, ticketOne, ticketFour, ticketSeven, ticketThree};
         assertArrayEquals(expected, manager.findAll("VOZ", "GUW"));
@@ -68,7 +79,7 @@ class TicketManagerTest {
     public void shouldAddNew() {
         manager.add(ticketEleven);
 
-        Ticket[] expected = new Ticket[] {ticketOne, ticketTwo, ticketThree, ticketFour, ticketFive, ticketSix, ticketSeven, ticketEight, ticketNine, ticketTen, ticketEleven};
+        Ticket[] expected = new Ticket[]{ticketOne, ticketTwo, ticketThree, ticketFour, ticketFive, ticketSix, ticketSeven, ticketEight, ticketNine, ticketTen, ticketEleven};
         assertArrayEquals(expected, repo.findAll());
     }
 
